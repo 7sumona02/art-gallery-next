@@ -20,9 +20,7 @@ export default function ArtworksPage() {
       }
       const data = await response.json();
       
-      // Filter out artworks that don't have image_id
       const artworksWithImages = data.data.filter(artwork => artwork.image_id);
-      
       setArtworks(prev => [...prev, ...artworksWithImages]);
       setHasMore(data.pagination.current_page < data.pagination.total_pages);
     } catch (err) {
@@ -32,7 +30,6 @@ export default function ArtworksPage() {
     }
   }, []);
 
-  // Infinite scroll observer
   const lastArtworkElementRef = useCallback(node => {
     if (loading) return;
     if (observer.current) observer.current.disconnect();
@@ -52,24 +49,29 @@ export default function ArtworksPage() {
 
   return (
     <div className='bg-[#EEEEEEff] min-h-screen w-full'>
-      <div className="container mx-auto max-w-6xl px-4 py-8 font-mono">
+      <div className="container mx-auto max-w-3xl px-4 py-8 font-mono">
         <h1 className="text-xl font-extrabold pb-2">Art Gallery</h1>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+        {/* Grid container with original card design */}
+        <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
           {artworks.map((artwork, index) => (
-            <div 
+            <Link 
+              href={`/artworks/${artwork.id}`} 
               key={artwork.id} 
               ref={index === artworks.length - 1 ? lastArtworkElementRef : null}
-              className="flex flex-col items-start justify-end pb-3"
+              className="flex flex-col items-start justify-end pb-3 hover:opacity-90 transition-opacity"
             >
-              <h2 className="text-xs font-bold pb-2">
-              {artwork.title 
-              ? (artwork.title.length > 30 
-                ? `${artwork.title.substring(0, 30)}...`
-                : artwork.title)
-              : 'Untitled'}
+              <h2 className="text-xs font-bold">
+                {artwork.title 
+                  ? (artwork.title.length > 30 
+                    ? `${artwork.title.substring(0, 30)}...`
+                    : artwork.title)
+                  : 'Untitled'}
               </h2>
-              <div className="relative group bg-transparent flex items-center justify-center overflow-hidden">
+              <h2 className="text-[10.5px] font-medium text-neutral-400 pb-1">
+                {artwork.place_of_origin}
+              </h2>
+              <div className="relative group bg-transparent flex items-center justify-center overflow-hidden w-full">
                 {artwork.image_id ? (
                   <img
                     src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
@@ -78,20 +80,19 @@ export default function ArtworksPage() {
                     loading="lazy"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/placeholder-artwork.jpg';
+                      e.target.src = '/placeholder.jpg';
                     }}
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
-                    Image not available
+                    image not available
                   </div>
                 )}
-                <Link href='/' className='absolute bottom-2 right-2 bg-white/70 rounded-full flex items-center p-0.5 opacity-0 group-hover:opacity-100 duration-200 transition-all'><ArrowUpRight className='size-4' /></Link>
+                <div className='absolute bottom-2 right-2 bg-white/70 rounded-full flex items-center p-0.5 opacity-0 group-hover:opacity-100 duration-200 transition-all'>
+                  <ArrowUpRight className='size-4' />
+                </div>
               </div>
-              {/* <p className="text-xs text-gray-600 mt-1">
-                {artwork.artist_title || 'Unknown artist'}
-              </p> */}
-            </div>
+            </Link>
           ))}
         </div>
         
