@@ -28,14 +28,19 @@ export default function ArtworkDetail({ params }) {
     fetchArtwork();
   }, [params.id]);
 
-  if (loading) return <div className="text-center py-8">Loading...</div>;
+  if (loading) return (
+    <div className="absolute left-1/2 top-1/2">
+    {/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div> */}
+    <div className="loader"></div>
+  </div>
+  );
   if (error) return <div className="text-center py-8">Error: {error}</div>;
   if (!artwork) return <div className="text-center py-8">Artwork not found</div>;
 
   return (
     <div className='bg-[#EEEEEEff] h-screen w-screen overflow-hidden'>
       <div className="font-mono">
-        <div className="grid md:grid-cols-2 translate-y-20">
+        <div className="grid md:grid-cols-2 grid-cols-1 translate-y-20">
           {/* Details Column - Left side */}
           <div className="order-1 md:order-none p-2 max-w-sm">
             {artwork.artist_title && (
@@ -76,7 +81,7 @@ export default function ArtworkDetail({ params }) {
                   <img
                     src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
                     alt={artwork.title || 'Untitled artwork'}
-                    className="w-full h-[90vh]"
+                    className="w-full md:h-[90vh] h-fit"
                   />
                 </PhotoView>
               ) : (
