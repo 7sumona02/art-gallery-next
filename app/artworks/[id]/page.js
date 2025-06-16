@@ -38,9 +38,9 @@ export default function ArtworkDetail({ params }) {
   if (!artwork) return <div className="text-center py-8">Artwork not found</div>;
 
   return (
-    <div className='bg-[#EEEEEEff] h-screen w-screen overflow-hidden'>
+    <div className='bg-[#EEEEEEff] min-h-screen w-screen overflow-hidden'>
       <div className="font-mono">
-        <div className="grid md:grid-cols-2 grid-cols-1 translate-y-20">
+        <div className="grid md:grid-cols-2 grid-cols-1 md:translate-y-20">
           {/* Details Column - Left side */}
           <div className="order-1 md:order-none p-2 max-w-sm">
             {artwork.artist_title && (
@@ -81,7 +81,7 @@ export default function ArtworkDetail({ params }) {
                   <img
                     src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
                     alt={artwork.title || 'Untitled artwork'}
-                    className="w-full md:h-[90vh] h-fit"
+                    className="w-full h-fit"
                   />
                 </PhotoView>
               ) : (
