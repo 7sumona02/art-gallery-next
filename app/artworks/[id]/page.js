@@ -71,6 +71,22 @@ export default function ArtworkDetail({ params }) {
                 <p className='text-xs font-extrabold'>{artwork.credit_line}</p>
               </div>
             )}
+
+          {/* {artwork.term_titles && artwork.term_titles.length > 0 && (
+            <div className="mt-4">
+              <h2 className="text-xs font-medium text-neutral-400 pb-2">Tags</h2>
+              <div className="flex flex-wrap gap-2">
+                {artwork.term_titles.map((term, index) => (
+                  <span 
+                    key={index} 
+                    className="text-xs font-extrabold rounded-full"
+                  >
+                    #{term}
+                  </span>
+                ))}
+                </div>
+              </div>
+              )} */}
           </div>
           
           {/* Image Column - Right side */}
