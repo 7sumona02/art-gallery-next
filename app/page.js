@@ -49,7 +49,7 @@ export default function ArtworksPage() {
 
   return (
     <div className='bg-[#EEEEEEff] min-h-screen w-full'>
-      <div className="container mx-auto max-w-3xl px-4 py-8 font-mono">
+      <div className="container mx-auto max-w-4xl px-4 py-8 font-mono">
         <h1 className="text-xl font-extrabold pb-2">Art Gallery</h1>
         
         {/* Grid container with original card design */}

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 export default function ArtworkDetail({ params }) {
   const [artwork, setArtwork] = useState(null);
@@ -35,9 +35,8 @@ export default function ArtworkDetail({ params }) {
   return (
     <div className='bg-[#EEEEEEff] h-screen w-screen overflow-hidden'>
       <div className="font-mono">
-        
         <div className="grid md:grid-cols-2 translate-y-20">
-          {/* Details Column - Now on the left */}
+          {/* Details Column - Left side */}
           <div className="order-1 md:order-none p-2 max-w-sm">
             {artwork.artist_title && (
               <p className="max-w-60 font-extrabold pb-2">Various works by<br /> {artwork.artist_title}</p>
@@ -69,19 +68,23 @@ export default function ArtworkDetail({ params }) {
             )}
           </div>
           
-          {/* Image Column - Now on the right */}
-          <div className="w-full h-screen">
-            {artwork.image_id ? (
-              <img
-                src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-                alt={artwork.title || 'Untitled artwork'}
-                className="w-full h-full"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
-                Image not available
-              </div>
-            )}
+          {/* Image Column - Right side */}
+          <div className="w-full h-full">
+            <PhotoProvider>
+              {artwork.image_id ? (
+                <PhotoView src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}>
+                  <img
+                    src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
+                    alt={artwork.title || 'Untitled artwork'}
+                    className="w-full h-[90vh]"
+                  />
+                </PhotoView>
+              ) : (
+                <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
+                  Image not available
+                </div>
+              )}
+            </PhotoProvider>
           </div>
         </div>
       </div>
