@@ -33,56 +33,53 @@ export default function ArtworkDetail({ params }) {
   if (!artwork) return <div className="text-center py-8">Artwork not found</div>;
 
   return (
-    <div className='bg-[#EEEEEEff] min-h-screen w-full'>
-      <div className="container mx-auto max-w-6xl px-4 py-8 font-mono">
-        <Link href="/" className="flex items-center text-sm mb-6 hover:underline">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to gallery
-        </Link>
+    <div className='bg-[#EEEEEEff] h-screen w-screen overflow-hidden'>
+      <div className="font-mono">
         
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white p-4 rounded-lg">
-            {artwork.image_id ? (
-              <img
-                src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-                alt={artwork.title || 'Untitled artwork'}
-                className="w-full h-auto max-h-[80vh] object-contain"
-              />
-            ) : (
-              <div className="w-full h-64 bg-gray-300 flex items-center justify-center text-gray-500">
-                Image not available
-              </div>
-            )}
-          </div>
-          
-          <div>
-            <h1 className="text-2xl font-bold mb-2">{artwork.title || 'Untitled'}</h1>
+        <div className="grid md:grid-cols-2 translate-y-20">
+          {/* Details Column - Now on the left */}
+          <div className="order-1 md:order-none p-2 max-w-sm">
             {artwork.artist_title && (
-              <p className="text-lg mb-4">By {artwork.artist_title}</p>
+              <p className="max-w-60 font-extrabold pb-2">Various works by<br /> {artwork.artist_title}</p>
             )}
             
             {artwork.date_display && (
-              <p className="text-sm mb-4">{artwork.date_display}</p>
+              <p className="text-xs font-extrabold pb-1">{artwork.date_display}</p>
             )}
             
             {artwork.medium_display && (
-              <div className="mb-4">
-                <h2 className="font-bold">Medium</h2>
-                <p>{artwork.medium_display}</p>
+              <div>
+                <h2 className="text-xs font-medium text-neutral-400 pt-2">Medium</h2>
+                <p className='text-xs font-extrabold'>{artwork.medium_display}</p>
               </div>
             )}
             
             {artwork.dimensions && (
-              <div className="mb-4">
-                <h2 className="font-bold">Dimensions</h2>
-                <p>{artwork.dimensions}</p>
+              <div>
+                <h2 className="text-xs font-medium text-neutral-400 pt-2">Dimensions</h2>
+                <p className='text-xs font-extrabold'>{artwork.dimensions}</p>
               </div>
             )}
             
             {artwork.credit_line && (
-              <div className="mb-4">
-                <h2 className="font-bold">Credit Line</h2>
-                <p>{artwork.credit_line}</p>
+              <div>
+                <h2 className="text-xs font-medium text-neutral-400 pt-2">Credit Line</h2>
+                <p className='text-xs font-extrabold'>{artwork.credit_line}</p>
+              </div>
+            )}
+          </div>
+          
+          {/* Image Column - Now on the right */}
+          <div className="w-full h-screen">
+            {artwork.image_id ? (
+              <img
+                src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
+                alt={artwork.title || 'Untitled artwork'}
+                className="w-full h-full"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
+                Image not available
               </div>
             )}
           </div>
